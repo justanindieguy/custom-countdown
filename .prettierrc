@@ -6,6 +6,12 @@
         "printWidth": 600,
         "htmlWhitespaceSensitivity": "ignore"
       }
+    },
+    {
+      "files": "*.js",
+      "options": {
+        "singleQuote": true
+      }
     }
   ]
 }
