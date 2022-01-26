@@ -21,6 +21,7 @@ let countdownTitle = '';
 let countdownDate = '';
 let countdownValue = Date;
 let countdownActive;
+let savedCountdown;
 
 // Set Date Input Minimum with Today's Date
 const [today] = new Date().toISOString().split('T');
@@ -67,6 +68,9 @@ const updateCountdown = (evt) => {
   countdownTitle = evt.srcElement[0].value;
   countdownDate = evt.srcElement[1].value;
 
+  savedCountdown = { title: countdownTitle, date: countdownDate };
+  localStorage.setItem('countdown', JSON.stringify(savedCountdown));
+
   // Check for valid date
   if (countdownDate === '') {
     alert('Please select a date for the coutdown.');
@@ -88,9 +92,28 @@ const reset = () => {
   //Reset Values
   countdownTitle = '';
   countdownDate = '';
+
+  localStorage.removeItem('countdown');
+};
+
+const restorePreviousCountdown = () => {
+  // Get countdown from local storage if available.
+  if (localStorage.getItem('countdown')) {
+    inputContainer.hidden = true;
+
+    savedCountdown = JSON.parse(localStorage.getItem('countdown'));
+    countdownTitle = savedCountdown.title;
+    countdownDate = savedCountdown.date;
+    countdownValue = new Date(`${countdownDate}T00:00:00`).getTime();
+
+    updateDOM();
+  }
 };
 
 // Event Listeners
 countdownForm.addEventListener('submit', updateCountdown);
 countdownBtn.addEventListener('click', reset);
 completeBtn.addEventListener('click', reset);
+
+// On load, check LocalStorage
+restorePreviousCountdown();
