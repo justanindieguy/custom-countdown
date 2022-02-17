@@ -73,7 +73,7 @@ const updateCountdown = (evt) => {
 
   // Check for valid date
   if (countdownDate === '') {
-    alert('Please select a date for the coutdown.');
+    alert('Please select a date for the countdown.');
   } else {
     // Get number version of current Date, updateDOM.
     countdownValue = new Date(`${countdownDate}T00:00:00`).getTime();
